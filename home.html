@@ -3,43 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIRO Style - معرض المنتجات</title>
+    <title>مكرمية رف دورين - FIRO Style</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: 'Cairo', sans-serif; background-color: #fdfaf7; padding: 20px; }
-        .header { text-align: center; margin-bottom: 40px; }
-        .header h1 { color: #a67c52; font-size: 32px; }
-        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
-        .product-card { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: 0.3s; text-decoration: none; color: inherit; display: block; }
-        .product-card:hover { transform: translateY(-10px); }
-        .product-card img { width: 100%; height: 300px; object-fit: cover; }
-        .product-info { padding: 15px; text-align: center; }
-        .product-info h3 { font-size: 18px; color: #444; margin-bottom: 10px; }
-        .product-info .price { color: #a67c52; font-weight: bold; font-size: 20px; }
+        :root {
+            --primary: #a67c52; /* لون المكرمية البني */
+            --accent: #25d366; /* لون الواتساب */
+            --bg: #fdfaf7;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+
+        body { background-color: var(--bg); color: #333; line-height: 1.6; }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .product-image img {
+            width: 100%;
+            border-radius: 15px;
+            display: block;
+        }
+
+        .details h1 { font-size: 26px; color: var(--primary); margin-bottom: 15px; }
+
+        .price-tag {
+            font-size: 30px;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .price-tag span { font-size: 18px; color: #888; text-decoration: none; }
+
+        .free-shipping {
+            color: #2e7d32;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .description { margin-bottom: 30px; }
+        .description ul { list-style: none; }
+        .description ul li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .description ul li i { color: var(--primary); font-size: 14px; }
+
+        .btn-whatsapp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp:hover { transform: translateY(-3px); background-color: #1ebe57; }
+
+        .trust-badges {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .badge { text-align: center; font-size: 12px; color: #777; flex: 1; }
+        .badge i { display: block; font-size: 20px; color: var(--primary); margin-bottom: 5px; }
+
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>معرض FIRO Style للمكرمية</h1>
-        <p>مرحباً بك في عالم الرقي</p>
+
+    <div class="container">
+        <div class="product-image">
+            <img src="thumb4.jpg" alt="مكرمية رف دورين">
+        </div>
+
+        <div class="details">
+            <h1>مكرمية رف دورين مودرن</h1>
+            
+            <div class="price-tag">
+                500 <span>جنيــه</span>
+            </div>
+            
+
+            <div class="description">
+                <p style="font-weight: bold; margin-bottom: 15px;">يا محلاها في الريسبشن أو الصالة ✨</p>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> تجمل أي ركن في بيتك وتضيف دفء للمكان</li>
+                    <li><i class="fas fa-check-circle"></i> تصميم عملي بـ رفوف خشبية متينة</li>
+                    <li><i class="fas fa-check-circle"></i> شغل هاند ميد بخيوط قطنية عالية الجودة</li>
+                    <li><i class="fas fa-check-circle"></i> شحن سريع لجميع المحافظات</li>
+                    <li><i class="fas fa-check-circle"></i> الدفع عند الاستلام بعد المعاينة</li>
+                </ul>
+            </div>
+
+            <a href="https://wa.me/201557671143?text=أريد%20طلب%20مكرمية%20الرف%20الدورين%20(عرض%20500%20جنيه)" target="_blank" class="btn-whatsapp">
+                <i class="fab fa-whatsapp"></i>
+                اطلب عبر واتساب
+            </a>
+
+            <div class="trust-badges">
+                <div class="badge">
+                    <i class="fas fa-truck"></i> توصيل مجاني
+                </div>
+                <div class="badge">
+                    <i class="fas fa-money-bill-wave"></i> دفع عند الاستلام
+                </div>
+                <div class="badge">
+                    <i class="fas fa-hand-holding-heart"></i> هاند ميد
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="gallery">
-        <a href="product3.html" class="product-card">
-            <img src="thumb4.jpg" alt="رف دورين">
-            <div class="product-info"><h3>مكرمية رف دورين</h3><div class="price">250 جنيه</div></div>
-        </a>
-        <a href="product2.html" class="product-card">
-            <img src="thumb1.jpg" alt="ستارة">
-            <div class="product-info"><h3>ستارة مكرمية عصرية</h3><div class="price">250 جنيه</div></div>
-        </a>
-        <a href="product1.html" class="product-card">
-            <img src="thumb3.jpg" alt="جدارية">
-            <div class="product-info"><h3>جدارية مكرمية ألوان</h3><div class="price">250 جنيه</div></div>
-        </a>
-        <a href="product.html" class="product-card">
-            <img src="main-macrame.jpg" alt="ورق شجر">
-            <div class="product-info"><h3>جدارية ورق الشجر</h3><div class="price">250 جنيه</div></div>
-        </a>
-    </div>
+
 </body>
 </html>
