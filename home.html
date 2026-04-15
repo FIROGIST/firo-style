@@ -9,26 +9,8 @@
         body { font-family: 'Cairo', sans-serif; background-color: #fdfaf7; padding: 20px; }
         .header { text-align: center; margin-bottom: 40px; }
         .header h1 { color: #a67c52; font-size: 32px; }
-        
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .product-card {
-            background: #fff;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: 0.3s;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+        .product-card { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: 0.3s; text-decoration: none; color: inherit; display: block; }
         .product-card:hover { transform: translateY(-10px); }
         .product-card img { width: 100%; height: 300px; object-fit: cover; }
         .product-info { padding: 15px; text-align: center; }
@@ -37,45 +19,27 @@
     </style>
 </head>
 <body>
-
     <div class="header">
         <h1>معرض FIRO Style للمكرمية</h1>
-        <p>اختر المنتج لمشاهدة التفاصيل والطلب</p>
+        <p>مرحباً بك في عالم الرقي</p>
     </div>
-
     <div class="gallery">
         <a href="product3.html" class="product-card">
             <img src="thumb4.jpg" alt="رف دورين">
-            <div class="product-info">
-                <h3>مكرمية رف دورين</h3>
-                <div class="price">500 جنيه</div>
-            </div>
+            <div class="product-info"><h3>مكرمية رف دورين</h3><div class="price">250 جنيه</div></div>
         </a>
-
         <a href="product2.html" class="product-card">
-            <img src="thumb1.jpg" alt="ستارة عصرية">
-            <div class="product-info">
-                <h3>ستارة مكرمية عصرية</h3>
-                <div class="price">250 جنيه</div>
-            </div>
+            <img src="thumb1.jpg" alt="ستارة">
+            <div class="product-info"><h3>ستارة مكرمية عصرية</h3><div class="price">250 جنيه</div></div>
         </a>
-
         <a href="product1.html" class="product-card">
-            <img src="thumb3.jpg" alt="جدارية ملونة">
-            <div class="product-info">
-                <h3>جدارية مكرمية ألوان</h3>
-                <div class="price">250 جنيه</div>
-            </div>
+            <img src="thumb3.jpg" alt="جدارية">
+            <div class="product-info"><h3>جدارية مكرمية ألوان</h3><div class="price">250 جنيه</div></div>
         </a>
-
         <a href="product.html" class="product-card">
             <img src="main-macrame.jpg" alt="ورق شجر">
-            <div class="product-info">
-                <h3>جدارية ورق الشجر</h3>
-                <div class="price">250 جنيه</div>
-            </div>
+            <div class="product-info"><h3>جدارية ورق الشجر</h3><div class="price">250 جنيه</div></div>
         </a>
     </div>
-
 </body>
 </html>
