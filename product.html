@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدارية ورق الشجر - FIRO Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #a67c52; /* لون المكرمية البني */
+            --accent: #25d366; /* لون الواتساب */
+            --bg: #fdfaf7;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+
+        body { background-color: var(--bg); color: #333; line-height: 1.6; }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        /* قسم الصور */
+        .product-image img {
+            width: 100%;
+            border-radius: 15px;
+            display: block;
+        }
+
+        /* قسم التفاصيل */
+        .details h1 { font-size: 26px; color: var(--primary); margin-bottom: 15px; }
+
+        .price-tag {
+            font-size: 30px;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .price-tag span { font-size: 18px; color: #888; text-decoration: none; }
+
+        .description { margin-bottom: 30px; }
+        .description ul { list-style: none; }
+        .description ul li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .description ul li i { color: var(--primary); font-size: 14px; }
+
+        /* الأزرار */
+        .btn-whatsapp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-whatsapp:hover { transform: translateY(-3px); background-color: #1ebe57; }
+
+        .trust-badges {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .badge { text-align: center; font-size: 12px; color: #777; flex: 1; }
+        .badge i { display: block; font-size: 20px; color: var(--primary); margin-bottom: 5px; }
+
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="product-image">
+            <img src="main-macrame.jpg" alt="جدارية مكرمية ورق شجر">
+        </div>
+
+        <div class="details">
+            <h1>جدارية مكرمية بتصميم ورق الشجر</h1>
+            
+            <div class="price-tag">
+                250 <span>جنيــه</span>
+            </div>
+
+            <div class="description">
+                <p style="font-weight: bold; margin-bottom: 15px;">تفصيلة صغيرة… بس بتغير شكل المكان كله ✨</p>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> ألوان هادية مريحة للعين (أوف وايت × بيج × بني)</li>
+                    <li><i class="fas fa-check-circle"></i> تدي إحساس بالدفا والرقي لأي ركن في بيتك</li>
+                    <li><i class="fas fa-check-circle"></i> شغل هاند ميد بإيد مصرية</li>
+                    <li><i class="fas fa-check-circle"></i> خامات قطن عالية الجودة</li>
+                    <li><i class="fas fa-check-circle"></i> مناسبة للريسبشن وغرف النوم</li>
+                    <li><i class="fas fa-check-circle"></i> متاح تنفيذ نفس التصميم أو أي ديزاين حسب طلبك</li>
+                </ul>
+            </div>
+
+            <a href="https://wa.me/201557671143?text=هل%20متوفر%20هذا%20المنتج%20(جدارية%20ورق%20الشجر)؟" target="_blank" class="btn-whatsapp">
+                <i class="fab fa-whatsapp"></i>
+                اطلب عبر واتساب
+            </a>
+
+            <div class="trust-badges">
+                <div class="badge">
+                    <i class="fas fa-truck"></i> شحن للمحافظات
+                </div>
+                <div class="badge">
+                    <i class="fas fa-money-bill-wave"></i> الدفع عند الاستلام
+                </div>
+                <div class="badge">
+                    <i class="fas fa-gem"></i> جودة عالية
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
