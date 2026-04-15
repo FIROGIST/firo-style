@@ -11,11 +11,46 @@
             --primary: #a67c52; /* لون المكرمية البني */
             --accent: #25d366; /* لون الواتساب */
             --bg: #fdfaf7;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --price-color: #444;
+            --badge-text: #777;
+            --border-color: #eee;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        /* ألوان الوضع الليلي */
+        [data-theme="dark"] {
+            --bg: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #f4ece2;
+            --price-color: #d4a373;
+            --badge-text: #aaa;
+            --border-color: rgba(128, 128, 128, 0.2);
+        }
 
-        body { background-color: var(--bg); color: #333; line-height: 1.6; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background 0.3s, color 0.3s; }
+
+        body { background-color: var(--bg); color: var(--text-color); line-height: 1.6; }
+
+        /* زر تبديل الوضع الليلي العائم */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
 
         .container {
             max-width: 1100px;
@@ -24,25 +59,23 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
-            background: #fff;
+            background: var(--card-bg);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
-        /* قسم الصور */
         .product-image img {
             width: 100%;
             border-radius: 15px;
             display: block;
         }
 
-        /* قسم التفاصيل */
         .details h1 { font-size: 26px; color: var(--primary); margin-bottom: 15px; }
 
         .price-tag {
             font-size: 30px;
             font-weight: bold;
-            color: #444;
+            color: var(--price-color);
             margin-bottom: 20px;
             display: block;
         }
@@ -54,7 +87,6 @@
         .description ul li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
         .description ul li i { color: var(--primary); font-size: 14px; }
 
-        /* الأزرار */
         .btn-whatsapp {
             display: flex;
             align-items: center;
@@ -77,19 +109,23 @@
             margin-top: 30px;
             display: flex;
             justify-content: space-between;
-            border-top: 1px solid #eee;
+            border-top: 1px solid var(--border-color);
             padding-top: 20px;
         }
 
-        .badge { text-align: center; font-size: 12px; color: #777; flex: 1; }
+        .badge { text-align: center; font-size: 12px; color: var(--badge-text); flex: 1; }
         .badge i { display: block; font-size: 20px; color: var(--primary); margin-bottom: 5px; }
 
         @media (max-width: 768px) {
-            .container { grid-template-columns: 1fr; }
+            .container { grid-template-columns: 1fr; margin-top: 80px; }
         }
     </style>
 </head>
 <body>
+
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i id="theme-icon" class="fas fa-moon"></i>
+    </button>
 
     <div class="container">
         <div class="product-image">
@@ -133,6 +169,30 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                icon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                icon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        window.onload = () => {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').className = 'fas fa-sun';
+            }
+        };
+    </script>
 
 </body>
 </html>
