@@ -3,186 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIRO Style - Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <title>FIRO Style - معرض المنتجات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
+        body { font-family: 'Cairo', sans-serif; background-color: #fdfaf7; padding: 20px; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 { color: #a67c52; font-size: 32px; }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        body {
-            /* تأكد أن اسم الصورة cover.png تماماً كما في المجلد */
-            background-image: url('cover.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            height: 100vh;
-            width: 100%;
-            display: flex;
-            justify-content: center; /* لتوسيط الفورم أفقياً */
-            align-items: center;    /* لتوسيط الفورم رأسياً */
-            background-color: #f4ece2; /* لون احتياطي يشبه ألوان المكرمية */
-        }
-
-        .login-box {
-            background: rgba(255, 255, 255, 0.2); /* زيادة الشفافية قليلاً للوضوح */
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 40px;
-            border-radius: 25px;
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin: 20px;
-        }
-
-        .logo-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            color: #fff;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-        }
-
-        .input-group {
-            position: relative;
-            margin-bottom: 15px;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 12px 45px 12px 15px;
-            border: none;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.9);
-            font-size: 16px;
-            outline: none;
-            text-align: right;
-        }
-
-        .input-group i {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #a67c52;
-        }
-
-        .forgot-pass {
-            display: block;
-            text-align: right;
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.85rem;
-            margin-bottom: 20px;
-        }
-
-        .btn-login {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            background: #a67c52;
-            color: white;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
+        .product-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             transition: 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
-        .btn-login:hover {
-            background: #8b6642;
-            transform: translateY(-2px);
-        }
-
-        .separator {
-            margin: 20px 0;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            font-size: 0.9rem;
-        }
-
-        .separator::before, .separator::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            background: rgba(255,255,255,0.4);
-            margin: 0 10px;
-        }
-
-        .social-login {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .social-btn {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 0.9rem;
-        }
-
-        .fb { background: #3b5998; }
-        .ig { background: #e4405f; }
-
-        .signup-text {
-            color: #fff;
-            font-size: 0.9rem;
-        }
-
-        .signup-text a {
-            color: #fff;
-            font-weight: bold;
-            text-decoration: underline;
-        }
+        .product-card:hover { transform: translateY(-10px); }
+        .product-card img { width: 100%; height: 300px; object-fit: cover; }
+        .product-info { padding: 15px; text-align: center; }
+        .product-info h3 { font-size: 18px; color: #444; margin-bottom: 10px; }
+        .product-info .price { color: #a67c52; font-weight: bold; font-size: 20px; }
     </style>
 </head>
 <body>
 
-    <div class="login-box">
-        <h1 class="logo-name">FIRO Style</h1>
-        
-        <form>
-            <div class="input-group">
-                <i class="fa-solid fa-envelope"></i>
-                <input type="text" placeholder="البريد الإلكتروني أو الهاتف">
+    <div class="header">
+        <h1>معرض FIRO Style للمكرمية</h1>
+        <p>اختر المنتج لمشاهدة التفاصيل والطلب</p>
+    </div>
+
+    <div class="gallery">
+        <a href="product3.html" class="product-card">
+            <img src="thumb4.jpg" alt="رف دورين">
+            <div class="product-info">
+                <h3>مكرمية رف دورين</h3>
+                <div class="price">250 جنيه</div>
             </div>
+        </a>
 
-            <div class="input-group">
-                <i class="fa-solid fa-lock"></i>
-                <input type="password" placeholder="كلمة المرور">
+        <a href="product2.html" class="product-card">
+            <img src="thumb1.jpg" alt="ستارة عصرية">
+            <div class="product-info">
+                <h3>ستارة مكرمية عصرية</h3>
+                <div class="price">250 جنيه</div>
             </div>
+        </a>
 
-            <a href="#" class="forgot-pass">نسيت كلمة المرور؟</a>
+        <a href="product1.html" class="product-card">
+            <img src="thumb3.jpg" alt="جدارية ملونة">
+            <div class="product-info">
+                <h3>جدارية مكرمية ألوان</h3>
+                <div class="price">250 جنيه</div>
+            </div>
+        </a>
 
-            <button type="submit" class="btn-login">تسجيل الدخول</button>
-        </form>
-
-        <div class="separator">أو عبر</div>
-
-        <div class="social-login">
-            <button class="social-btn fb"><i class="fa-brands fa-facebook"></i> فيسبوك</button>
-            <button class="social-btn ig"><i class="fa-brands fa-instagram"></i> انستجرام</button>
-        </div>
-
-        <p class="signup-text">ليس لديك حساب؟ <a href="#">سجل الآن</a></p>
+        <a href="product.html" class="product-card">
+            <img src="main-macrame.jpg" alt="ورق شجر">
+            <div class="product-info">
+                <h3>جدارية ورق الشجر</h3>
+                <div class="price">250 جنيه</div>
+            </div>
+        </a>
     </div>
 
 </body>
