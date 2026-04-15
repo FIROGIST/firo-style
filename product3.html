@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكرمية رف دورين - FIRO Style</title>
+    <title>ستارة مكرمية عصرية - FIRO Style</title>
     
     <link rel="icon" type="image/png" href="logo.png">
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script src="cart.js"></script>
+
     <style>
         :root {
             --primary: #a67c52;
@@ -18,6 +21,7 @@
             --text-color: #333;
             --price-color: #444;
             --badge-text: #777;
+            --border-color: #eee;
         }
 
         [data-theme="dark"] {
@@ -26,6 +30,7 @@
             --text-color: #f4ece2;
             --price-color: #d4a373;
             --badge-text: #aaa;
+            --border-color: rgba(128, 128, 128, 0.2);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: background 0.3s, color 0.3s; }
@@ -80,7 +85,7 @@
         }
 
         .price-tag span { font-size: 18px; color: inherit; text-decoration: none; }
-
+        
         .shipping-note {
             font-size: 14px;
             color: #888;
@@ -94,6 +99,14 @@
         .description ul { list-style: none; }
         .description ul li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
         .description ul li i { color: var(--primary); font-size: 14px; }
+
+        /* تنسيق قسم أزرار الشراء */
+        .purchase-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
 
         .btn-whatsapp {
             display: flex;
@@ -113,11 +126,31 @@
 
         .btn-whatsapp:hover { transform: translateY(-3px); background-color: #1ebe57; }
 
+        /* زر إضافة إلى السلة */
+        .btn-add-cart {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(166, 124, 82, 0.2);
+        }
+
+        .btn-add-cart:hover { transform: translateY(-3px); opacity: 0.9; }
+
         .trust-badges {
             margin-top: 30px;
             display: flex;
             justify-content: space-between;
-            border-top: 1px solid rgba(128, 128, 128, 0.2);
+            border-top: 1px solid var(--border-color);
             padding-top: 20px;
         }
 
@@ -137,42 +170,49 @@
 
     <div class="container">
         <div class="product-image">
-            <img src="thumb4.jpg" alt="مكرمية رف دورين">
+            <img src="thumb1.jpg" alt="ستارة مكرمية عصرية">
         </div>
 
         <div class="details">
-            <h1>مكرمية رف دورين مودرن</h1>
+            <h1>ستارة مكرمية بتصميم عصري وجذاب</h1>
             
             <div class="price-tag">
-                500 <span>جنيــه</span>
+                350 <span>جنيــه</span>
             </div>
             <span class="shipping-note">+ مصاريف الشحن</span>
-            
+
             <div class="description">
-                <p style="font-weight: bold; margin-bottom: 15px;">يا محلاها في الريسبشن أو الصالة ✨</p>
+                <p style="font-weight: bold; margin-bottom: 15px;">جدد ديكور بيتك بأناقة ورقي ✨</p>
                 <ul>
-                    <li><i class="fas fa-check-circle"></i> تجمل أي ركن في بيتك وتضيف دفء للمكان</li>
-                    <li><i class="fas fa-check-circle"></i> تصميم عملي بـ رفوف خشبية متينة</li>
-                    <li><i class="fas fa-check-circle"></i> شغل هاند ميد بخيوط قطنية عالية الجودة</li>
-                    <li><i class="fas fa-check-circle"></i> شحن سريع لجميع المحافظات</li>
-                    <li><i class="fas fa-check-circle"></i> الدفع عند الاستلام بعد المعاينة</li>
+                    <li><i class="fas fa-check-circle"></i> تصميم عصري وجذاب يضيف لمسة فخامة لكل غرفة</li>
+                    <li><i class="fas fa-check-circle"></i> توصيل سريع وآمن حتى باب البيت</li>
+                    <li><i class="fas fa-check-circle"></i> شغل هاند ميد متقن وبجودة عالية</li>
+                    <li><i class="fas fa-check-circle"></i> مناسبة جداً كهدية راقية ومميزة</li>
+                    <li><i class="fas fa-check-circle"></i> متاح تنفيذ مقاسات وألوان مخصصة</li>
                 </ul>
             </div>
 
-            <a href="https://wa.me/201557671143?text=أريد%20طلب%20مكرمية%20الرف%20الدورين%20(%20500%20جنيه)" target="_blank" class="btn-whatsapp">
-                <i class="fab fa-whatsapp"></i>
-                اطلب عبر واتساب
-            </a>
+            <div class="purchase-buttons">
+                <a href="https://wa.me/201557671143?text=هل%20متوفر%20هذا%20المنتج%20(ستارة%20المكرمية%20العصرية)؟" target="_blank" class="btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    اطلب عبر واتساب
+                </a>
+
+                <button class="btn-add-cart" onclick="addToCart('ستارة مكرمية عصرية', 350, 'thumb1.jpg')">
+                    <i class="fas fa-cart-plus"></i>
+                    إضافة إلى السلة
+                </button>
+            </div>
 
             <div class="trust-badges">
                 <div class="badge">
                     <i class="fas fa-truck"></i> شحن للمحافظات
                 </div>
                 <div class="badge">
-                    <i class="fas fa-money-bill-wave"></i> دفع عند الاستلام
+                    <i class="fas fa-money-bill-wave"></i> الدفع عند الاستلام
                 </div>
                 <div class="badge">
-                    <i class="fas fa-hand-holding-heart"></i> هاند ميد
+                    <i class="fas fa-gem"></i> جودة مضمونة
                 </div>
             </div>
         </div>
