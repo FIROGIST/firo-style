@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ستارة مكرمية عصرية - FIRO Style</title>
+    
+    <link rel="icon" type="image/png" href="logo.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary: #a67c52; /* لون المكرمية البني */
-            --accent: #25d366; /* لون الواتساب */
+            --primary: #a67c52;
+            --accent: #25d366;
             --bg: #fdfaf7;
             --card-bg: #ffffff;
             --text-color: #333;
@@ -18,7 +21,6 @@
             --border-color: #eee;
         }
 
-        /* ألوان الوضع الليلي */
         [data-theme="dark"] {
             --bg: #121212;
             --card-bg: #1e1e1e;
@@ -32,7 +34,6 @@
 
         body { background-color: var(--bg); color: var(--text-color); line-height: 1.6; }
 
-        /* زر تبديل الوضع الليلي العائم */
         .theme-toggle {
             position: fixed;
             top: 20px;
@@ -80,7 +81,16 @@
             display: block;
         }
 
-        .price-tag span { font-size: 18px; color: #888; text-decoration: none; }
+        .price-tag span { font-size: 18px; color: inherit; text-decoration: none; }
+        
+        .shipping-note {
+            font-size: 14px;
+            color: #888;
+            font-weight: normal;
+            display: block;
+            margin-top: -5px;
+            margin-bottom: 15px;
+        }
 
         .description { margin-bottom: 30px; }
         .description ul { list-style: none; }
@@ -136,20 +146,20 @@
             <h1>ستارة مكرمية بتصميم عصري وجذاب</h1>
             
             <div class="price-tag">
-    350 <span style="text-decoration: none; color: var(--price-color);">جنيــه</span>
-    <p style="font-size: 14px; color: #888; font-weight: normal; margin-top: -5px;">+ مصاريف الشحن</p>
-</div>
+                350 <span>جنيــه</span>
+            </div>
+            <span class="shipping-note">+ مصاريف الشحن</span>
 
-<div class="description">
-    <p style="font-weight: bold; margin-bottom: 15px;">جدد ديكور بيتك بأناقة ورقي ✨</p>
-    <ul>
-        <li><i class="fas fa-check-circle"></i> تصميم عصري وجذاب يضيف لمسة فخامة لكل غرفة</li>
-        <li><i class="fas fa-check-circle"></i> توصيل سريع وآمن حتى باب البيت</li>
-        <li><i class="fas fa-check-circle"></i> شغل هاند ميد متقن وبجودة عالية</li>
-        <li><i class="fas fa-check-circle"></i> مناسبة جداً كهدية راقية ومميزة</li>
-        <li><i class="fas fa-check-circle"></i> متاح تنفيذ مقاسات وألوان مخصصة</li>
-    </ul>
-</div>
+            <div class="description">
+                <p style="font-weight: bold; margin-bottom: 15px;">جدد ديكور بيتك بأناقة ورقي ✨</p>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> تصميم عصري وجذاب يضيف لمسة فخامة لكل غرفة</li>
+                    <li><i class="fas fa-check-circle"></i> توصيل سريع وآمن حتى باب البيت</li>
+                    <li><i class="fas fa-check-circle"></i> شغل هاند ميد متقن وبجودة عالية</li>
+                    <li><i class="fas fa-check-circle"></i> مناسبة جداً كهدية راقية ومميزة</li>
+                    <li><i class="fas fa-check-circle"></i> متاح تنفيذ مقاسات وألوان مخصصة</li>
+                </ul>
+            </div>
 
             <a href="https://wa.me/201557671143?text=هل%20متوفر%20هذا%20المنتج%20(ستارة%20المكرمية%20العصرية)؟" target="_blank" class="btn-whatsapp">
                 <i class="fab fa-whatsapp"></i>
@@ -158,7 +168,7 @@
 
             <div class="trust-badges">
                 <div class="badge">
-                    <i class="fas fa-truck"></i> شحن مجاني
+                    <i class="fas fa-truck"></i> شحن للمحافظات
                 </div>
                 <div class="badge">
                     <i class="fas fa-money-bill-wave"></i> الدفع عند الاستلام
@@ -186,7 +196,6 @@
             }
         }
 
-        // تطبيق الوضع المحفوظ عند التحميل
         window.onload = () => {
             if (localStorage.getItem('theme') === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
