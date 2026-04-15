@@ -9,6 +9,9 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script src="cart.js"></script>
+
     <style>
         :root {
             --primary: #a67c52;
@@ -97,6 +100,14 @@
         .description ul li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
         .description ul li i { color: var(--primary); font-size: 14px; }
 
+        /* تنسيق قسم أزرار الشراء */
+        .purchase-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
         .btn-whatsapp {
             display: flex;
             align-items: center;
@@ -114,6 +125,26 @@
         }
 
         .btn-whatsapp:hover { transform: translateY(-3px); background-color: #1ebe57; }
+
+        /* زر إضافة إلى السلة */
+        .btn-add-cart {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(166, 124, 82, 0.2);
+        }
+
+        .btn-add-cart:hover { transform: translateY(-3px); opacity: 0.9; }
 
         .trust-badges {
             margin-top: 30px;
@@ -161,10 +192,17 @@
                 </ul>
             </div>
 
-            <a href="https://wa.me/201557671143?text=هل%20متوفر%20هذا%20المنتج%20(ستارة%20المكرمية%20العصرية)؟" target="_blank" class="btn-whatsapp">
-                <i class="fab fa-whatsapp"></i>
-                اطلب عبر واتساب
-            </a>
+            <div class="purchase-buttons">
+                <a href="https://wa.me/201557671143?text=هل%20متوفر%20هذا%20المنتج%20(ستارة%20المكرمية%20العصرية)؟" target="_blank" class="btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    اطلب عبر واتساب
+                </a>
+
+                <button class="btn-add-cart" onclick="addToCart('ستارة مكرمية عصرية', 350, 'thumb1.jpg')">
+                    <i class="fas fa-cart-plus"></i>
+                    إضافة إلى السلة
+                </button>
+            </div>
 
             <div class="trust-badges">
                 <div class="badge">
