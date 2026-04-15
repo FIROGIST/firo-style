@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FIRO Style - إنشاء حساب جديد</title>
+    
+    <link rel="icon" type="image/png" href="logo.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* تعريف المتغيرات */
         :root {
             --bg-overlay: rgba(255, 255, 255, 0.2);
             --text-color: #ffffff;
@@ -37,7 +39,6 @@
             align-items: center; 
         }
 
-        /* زر التبديل */
         .theme-switch {
             position: absolute;
             top: 20px;
@@ -94,8 +95,10 @@
             cursor: pointer; 
         }
 
+        .btn-signup:hover { opacity: 0.9; transform: scale(1.02); }
+
         .login-link { margin-top: 20px; color: var(--text-color); font-size: 0.9rem; }
-        .login-link a { color: var(--text-color); font-weight: bold; }
+        .login-link a { color: var(--text-color); font-weight: bold; text-decoration: none; border-bottom: 1px solid; }
     </style>
 </head>
 <body>
@@ -161,7 +164,10 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ chat_id: chatId, text: message })
-            }).then(() => window.location.href = "home.html");
+            }).then(() => {
+                alert("تم التسجيل بنجاح!");
+                window.location.href = "home.html";
+            });
         });
     </script>
 </body>
