@@ -49,14 +49,35 @@
         
         .nav-right { display: flex; align-items: center; gap: 15px; }
 
-        /* زر التبديل */
-        .theme-toggle {
+        /* زر التبديل وأيقونة السلة */
+        .theme-toggle, .cart-icon {
             background: none;
             border: none;
             color: var(--text-main);
             font-size: 20px;
             cursor: pointer;
             padding: 5px;
+            text-decoration: none;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        /* عداد السلة الصغير */
+        #cart-count {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: #ff4d4d;
+            color: white;
+            font-size: 10px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
         }
 
         .nav-link {
@@ -97,6 +118,15 @@
         .product-info { padding: 20px; text-align: center; }
         .product-info h3 { font-size: 18px; color: var(--text-main); margin-bottom: 8px; }
         .product-info .price { color: var(--price-color); font-weight: bold; font-size: 22px; }
+        
+        /* تنسيق جملة مصاريف الشحن */
+        .shipping-note {
+            display: block;
+            font-size: 14px;
+            color: #888;
+            margin-top: 2px;
+            font-weight: normal;
+        }
     </style>
 </head>
 <body>
@@ -107,6 +137,12 @@
                 <i class="fa-solid fa-paper-plane"></i>
                 تواصل معنا
             </a>
+
+            <a href="cart.html" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count">0</span>
+            </a>
+
             <button class="theme-toggle" onclick="toggleTheme()">
                 <i id="theme-icon" class="fas fa-moon"></i>
             </button>
@@ -124,7 +160,7 @@
             <img src="main-macrame.jpg" alt="جدارية ورق الشجر">
             <div class="product-info">
                 <h3>جدارية ورق الشجر</h3>
-                <div class="price">250 جنيه</div>
+                <div class="price">250 جنيه <span class="shipping-note">+ مصاريف الشحن</span></div>
             </div>
         </a>
 
@@ -132,7 +168,7 @@
             <img src="thumb3.jpg" alt="جدارية مكرمية ألوان">
             <div class="product-info">
                 <h3>جدارية مكرمية ألوان</h3>
-                <div class="price">250 جنيه</div>
+                <div class="price">250 جنيه <span class="shipping-note">+ مصاريف الشحن</span></div>
             </div>
         </a>
 
@@ -140,7 +176,7 @@
             <img src="thumb1.jpg" alt="ستارة مكرمية">
             <div class="product-info">
                 <h3>ستارة مكرمية عصرية</h3>
-                <div class="price">350 جنيه</div>
+                <div class="price">350 جنيه <span class="shipping-note">+ مصاريف الشحن</span></div>
             </div>
         </a>
 
@@ -148,12 +184,21 @@
             <img src="thumb4.jpg" alt="مكرمية رف دورين">
             <div class="product-info">
                 <h3>مكرمية رف دورين</h3>
-                <div class="price">500 جنيه</div>
+                <div class="price">500 جنيه <span class="shipping-note">+ مصاريف الشحن</span></div>
             </div>
         </a>
     </div>
 
     <script>
+        // وظيفة تحديث عداد السلة
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const countElement = document.getElementById('cart-count');
+            if (countElement) {
+                countElement.innerText = cart.length;
+            }
+        }
+
         function toggleTheme() {
             const body = document.documentElement;
             const icon = document.getElementById('theme-icon');
@@ -169,8 +214,9 @@
             }
         }
 
-        // تطبيق الوضع المحفوظ عند التحميل
+        // تطبيق الوضع المحفوظ عند التحميل وتحديث العداد
         window.onload = () => {
+            updateCartCount(); // تحديث رقم السلة عند فتح الصفحة
             if (localStorage.getItem('theme') === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
                 document.getElementById('theme-icon').className = 'fas fa-sun';
