@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>جدارية ورق الشجر - FIRO Style</title>
+    
+    <link rel="icon" type="image/png" href="logo.png">
+    
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary: #a67c52; /* لون المكرمية البني */
-            --accent: #25d366; /* لون الواتساب */
+            --primary: #a67c52;
+            --accent: #25d366;
             --bg: #fdfaf7;
             --card-bg: #ffffff;
             --text-color: #333;
@@ -18,7 +21,6 @@
             --border-color: #eee;
         }
 
-        /* ألوان الوضع الليلي */
         [data-theme="dark"] {
             --bg: #121212;
             --card-bg: #1e1e1e;
@@ -32,7 +34,6 @@
 
         body { background-color: var(--bg); color: var(--text-color); line-height: 1.6; }
 
-        /* زر تبديل الوضع الليلي العائم */
         .theme-toggle {
             position: fixed;
             top: 20px;
@@ -80,7 +81,17 @@
             display: block;
         }
 
-        .price-tag span { font-size: 18px; color: #888; text-decoration: none; }
+        .price-tag span { font-size: 18px; color: inherit; text-decoration: none; }
+        
+        /* تنسيق عبارة مصاريف الشحن */
+        .shipping-note {
+            font-size: 14px;
+            color: #888;
+            font-weight: normal;
+            display: block;
+            margin-top: -5px;
+            margin-bottom: 15px;
+        }
 
         .description { margin-bottom: 30px; }
         .description ul { list-style: none; }
@@ -138,6 +149,7 @@
             <div class="price-tag">
                 250 <span>جنيــه</span>
             </div>
+            <span class="shipping-note">+ مصاريف الشحن</span>
 
             <div class="description">
                 <p style="font-weight: bold; margin-bottom: 15px;">تفصيلة صغيرة… بس بتغير شكل المكان كله ✨</p>
