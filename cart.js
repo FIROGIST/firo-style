@@ -26,6 +26,7 @@ function updateCartCount() {
     const countElement = document.getElementById('cart-count');
     
     if (countElement) {
+        // نضع عدد العناصر داخل العنصر
         countElement.innerText = cart.length;
 
         // تحسين: إظهار العداد فقط إذا كانت السلة تحتوي على منتجات
@@ -83,8 +84,15 @@ function showConfirmation(name) {
     }, 3000);
 }
 
+// --- التعديلات لضمان التحديث التلقائي ---
+
 // تحديث العداد عند تحميل أي صفحة مرتبطة بالملف (لضمان ظهور الرقم عند العودة للهوم)
 window.addEventListener('load', updateCartCount);
 
 // إضافة مستمع لحدث DOMContentLoaded كزيادة تأكيد لسرعة الاستجابة
 document.addEventListener('DOMContentLoaded', updateCartCount);
+
+// سطر إضافي: بيعمل تحديث لو المستخدم رجع بظهر المتصفح (Back Button)
+window.addEventListener('pageshow', function(event) {
+    updateCartCount();
+});
