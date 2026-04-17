@@ -6,6 +6,9 @@
     <title>FIRO Style - معرض المنتجات</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <script src="cart.js"></script>
+
     <style>
         /* المتغيرات الأساسية */
         :root {
@@ -112,6 +115,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
             text-decoration: none; 
             color: inherit; 
+            transition: transform 0.3s ease;
         }
         .product-card:hover { transform: translateY(-10px); }
         .product-card img { width: 100%; height: 320px; object-fit: cover; }
@@ -190,15 +194,7 @@
     </div>
 
     <script>
-        // وظيفة تحديث عداد السلة
-        function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const countElement = document.getElementById('cart-count');
-            if (countElement) {
-                countElement.innerText = cart.length;
-            }
-        }
-
+        // وظيفة تبديل الوضع الليلي
         function toggleTheme() {
             const body = document.documentElement;
             const icon = document.getElementById('theme-icon');
@@ -214,9 +210,13 @@
             }
         }
 
-        // تطبيق الوضع المحفوظ عند التحميل وتحديث العداد
+        // تحديث العداد وتطبيق الوضع المحفوظ عند التحميل
         window.onload = () => {
-            updateCartCount(); // تحديث رقم السلة عند فتح الصفحة
+            // استدعاء دالة تحديث السلة من ملف cart.js
+            if (typeof updateCartCount === "function") {
+                updateCartCount();
+            }
+
             if (localStorage.getItem('theme') === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
                 document.getElementById('theme-icon').className = 'fas fa-sun';
