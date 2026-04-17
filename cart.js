@@ -1,5 +1,6 @@
 // 1. وظيفة إضافة المنتج للسلة
 function addToCart(name, price, image) {
+    // جلب البيانات الحالية من الذاكرة أو إنشاء مصفوفة فارغة
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
     const product = {
@@ -8,13 +9,14 @@ function addToCart(name, price, image) {
         image: image
     };
 
+    // إضافة المنتج للمصفوفة وحفظها
     cart.push(product);
     localStorage.setItem('cart', JSON.stringify(cart));
 
     // تحديث العداد في الهيدر فوراً
     updateCartCount();
 
-    // إظهار الرسالة الخضراء
+    // إظهار الرسالة الخضراء (Toast)
     showConfirmation(name);
 }
 
@@ -22,8 +24,16 @@ function addToCart(name, price, image) {
 function updateCartCount() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const countElement = document.getElementById('cart-count');
+    
     if (countElement) {
         countElement.innerText = cart.length;
+
+        // تحسين: إظهار العداد فقط إذا كانت السلة تحتوي على منتجات
+        if (cart.length > 0) {
+            countElement.style.display = 'flex';
+        } else {
+            countElement.style.display = 'none';
+        }
     }
 }
 
@@ -56,14 +66,25 @@ function showConfirmation(name) {
     document.body.appendChild(toast);
 
     // أنيميشن الدخول
-    toast.animate([{ opacity: 0, bottom: '0px' }, { opacity: 1, bottom: '30px' }], { duration: 300 });
+    if (toast.animate) {
+        toast.animate([
+            { opacity: 0, bottom: '0px' }, 
+            { opacity: 1, bottom: '30px' }
+        ], { 
+            duration: 300 
+        });
+    }
 
     // الاختفاء بعد 3 ثوانٍ
     setTimeout(() => {
+        toast.style.transition = 'opacity 0.5s ease';
         toast.style.opacity = '0';
         setTimeout(() => toast.remove(), 500);
     }, 3000);
 }
 
-// تحديث العداد عند تحميل أي صفحة مرتبطة بالملف
+// تحديث العداد عند تحميل أي صفحة مرتبطة بالملف (لضمان ظهور الرقم عند العودة للهوم)
 window.addEventListener('load', updateCartCount);
+
+// إضافة مستمع لحدث DOMContentLoaded كزيادة تأكيد لسرعة الاستجابة
+document.addEventListener('DOMContentLoaded', updateCartCount);
