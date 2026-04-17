@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIRO Style - الملف الشخصي</title>
+    
+    <link rel="icon" type="image/png" href="logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-overlay: rgba(255, 255, 255, 0.2);
+            --text-color: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.15);
+            --accent-color: #a67c52;
+            --modal-bg: #ffffff;
+            --input-text: #333;
+        }
+
+        [data-theme="dark"] {
+            --bg-overlay: rgba(0, 0, 0, 0.7);
+            --text-color: #f4ece2;
+            --card-bg: rgba(30, 30, 30, 0.8);
+            --accent-color: #d4a373;
+            --modal-bg: #1e1e1e;
+            --input-text: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: 0.3s; }
+
+        body { 
+            background-image: url('cover.png'); 
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed; 
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .profile-container {
+            background: var(--bg-overlay);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        /* تنسيق الصورة */
+        .avatar-wrapper {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 15px;
+        }
+
+        .avatar-circle {
+            width: 100%;
+            height: 100%;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            color: white;
+            border: 4px solid rgba(255,255,255,0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .edit-avatar-btn {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: var(--accent-color);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border: 2px solid white;
+            font-size: 14px;
+        }
+
+        .user-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--text-color);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .edit-name-icon { cursor: pointer; font-size: 1.2rem; opacity: 0.7; }
+        .edit-name-icon:hover { opacity: 1; color: var(--accent-color); }
+
+        /* Modal - النافذة المنبثقة */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--modal-bg);
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            color: var(--input-text);
+        }
+
+        .modal-content input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            background: var(--bg-overlay);
+            color: var(--input-text);
+            text-align: center;
+        }
+
+        .modal-btns { display: flex; gap: 10px; }
+        .save-btn { background: var(--accent-color); color: white; flex: 1; border: none; padding: 10px; border-radius: 10px; cursor: pointer; }
+        .cancel-btn { background: #888; color: white; flex: 1; border: none; padding: 10px; border-radius: 10px; cursor: pointer; }
+
+        .hidden-input { display: none; }
+
+        /* الأقسام السابقة */
+        .info-section { background: var(--card-bg); border-radius: 20px; padding: 20px; margin: 25px 0; text-align: right; }
+        .btn-logout { background: #ff4d4d; color: white; padding: 12px; border: none; border-radius: 12px; cursor: pointer; width: 100%; }
+        .btn-home { background: var(--accent-color); color: white; text-decoration: none; padding: 12px; border-radius: 12px; display: block; margin-bottom: 10px; font-weight: bold;}
+    </style>
+</head>
+<body>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h3>تعديل الاسم</h3>
+            <input type="text" id="newNameInput" placeholder="أدخل اسمك الجديد">
+            <div class="modal-btns">
+                <button class="save-btn" onclick="saveName()">حفظ</button>
+                <button class="cancel-btn" onclick="closeModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="imageUpload" class="hidden-input" accept="image/*" onchange="previewImage(event)">
+
+    <div class="profile-container">
+        <div class="avatar-wrapper">
+            <div class="avatar-circle" id="user-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <label for="imageUpload" class="edit-avatar-btn">
+                <i class="fas fa-camera"></i>
+            </label>
+        </div>
+
+        <h1 class="user-name">
+            <span id="display-name">جاري التحميل...</span>
+            <i class="fas fa-edit edit-name-icon" onclick="openModal()"></i>
+        </h1>
+        <p style="color: var(--text-color); opacity: 0.8;" id="display-email">email@example.com</p>
+
+        <div class="info-section">
+            <div style="margin-bottom: 15px;">
+                <span style="color: var(--accent-color); font-weight: bold;">تاريخ الانضمام:</span>
+                <span id="join-date" style="color: var(--text-color);">15 أبريل 2024</span>
+            </div>
+            <div>
+                <span style="color: var(--accent-color); font-weight: bold;">حالة الحساب:</span>
+                <span style="color: var(--text-color);">عضو نشط ✅</span>
+            </div>
+        </div>
+
+        <a href="home.html" class="btn-home">العودة للمتجر 🏠</a>
+        <button onclick="logout()" class="btn-logout">تسجيل الخروج 🚪</button>
+    </div>
+
+    <script>
+        const email = localStorage.getItem('current_user_email');
+
+        window.onload = () => {
+            if (!email) { window.location.href = "index.html"; return; }
+
+            document.getElementById('display-email').innerText = email;
+            
+            // جلب البيانات المحفوظة أو الافتراضية
+            const savedName = localStorage.getItem(`name_${email}`);
+            const savedImg = localStorage.getItem(`img_${email}`);
+
+            if (savedName) {
+                document.getElementById('display-name').innerText = savedName;
+            } else {
+                document.getElementById('display-name').innerText = email.split('@')[0];
+            }
+
+            if (savedImg) {
+                document.getElementById('user-avatar').innerHTML = `<img src="${savedImg}">`;
+            } else {
+                document.getElementById('user-avatar').innerText = (savedName || email)[0].toUpperCase();
+            }
+        };
+
+        // وظائف تعديل الاسم
+        function openModal() { document.getElementById('editModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('editModal').style.display = 'none'; }
+        
+        function saveName() {
+            const newName = document.getElementById('newNameInput').value.trim();
+            if (newName) {
+                localStorage.setItem(`name_${email}`, newName);
+                document.getElementById('display-name').innerText = newName;
+                closeModal();
+                // تحديث الصورة لو مفيش صورة مرفوعة
+                if (!localStorage.getItem(`img_${email}`)) {
+                    document.getElementById('user-avatar').innerHTML = '';
+                    document.getElementById('user-avatar').innerText = newName[0].toUpperCase();
+                }
+            }
+        }
+
+        // وظائف تعديل الصورة
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                const base64String = reader.result;
+                localStorage.setItem(`img_${email}`, base64String); // حفظ الصورة
+                document.getElementById('user-avatar').innerHTML = `<img src="${base64String}">`;
+            }
+            reader.readAsDataURL(file);
+        }
+
+        function logout() {
+            localStorage.removeItem('current_user_email');
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
