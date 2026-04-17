@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>لوحة التحكم - FIRO Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --main-bg: #f4f4f9; --sidebar-color: #a67c52; --text-dark: #333; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background: var(--main-bg); display: flex; min-height: 100vh; }
+
+        /* الجانب الأيمن (المنيو) */
+        .sidebar { width: 250px; background: var(--sidebar-color); color: white; padding: 20px; }
+        .sidebar h2 { text-align: center; margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 10px; }
+        .nav-item { padding: 15px; cursor: pointer; border-radius: 10px; margin-bottom: 5px; transition: 0.3s; }
+        .nav-item:hover { background: rgba(255,255,255,0.1); }
+        .nav-item.active { background: white; color: var(--sidebar-color); font-weight: bold; }
+
+        /* المحتوى الرئيسي */
+        .main-content { flex: 1; padding: 30px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center; }
+        .stat-card i { font-size: 30px; color: var(--sidebar-color); margin-bottom: 10px; }
+        .stat-card h3 { font-size: 24px; color: var(--text-dark); }
+
+        /* الجداول والفورم */
+        .section-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: right; border-bottom: 1px solid #eee; }
+        th { color: var(--sidebar-color); }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; }
+        .btn-add { background: var(--sidebar-color); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>FIRO Admin</h2>
+        <div class="nav-item active"><i class="fas fa-chart-line"></i> الإحصائيات</div>
+        <div class="nav-item"><i class="fas fa-users"></i> المستخدمين</div>
+        <div class="nav-item"><i class="fas fa-box"></i> المنتجات</div>
+        <a href="home.html" style="color: white; text-decoration: none; display: block; margin-top: 50px; padding: 15px;"><i class="fas fa-eye"></i> عرض الموقع</a>
+    </div>
+
+    <div class="main-content">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <p>إجمالي المستخدمين</p>
+                <h3 id="user-count">0</h3>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-shopping-bag"></i>
+                <p>المنتجات النشطة</p>
+                <h3 id="product-count">4</h3>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h3>المستخدمين المسجلين مؤخراً</h3>
+            <table id="users-table">
+                <thead>
+                    <tr>
+                        <th>الإيميل</th>
+                        <th>الحالة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+
+        <br>
+
+        <div class="section-card">
+            <h3>إضافة منتج جديد (قريباً)</h3>
+            <div class="form-group">
+                <label>اسم المنتج</label>
+                <input type="text" placeholder="مثلاً: مرجيحة مكرمية">
+            </div>
+            <div class="form-group">
+                <label>السعر</label>
+                <input type="number" placeholder="مثلاً: 600">
+            </div>
+            <button class="btn-add">إضافة للمتجر</button>
+        </div>
+    </div>
+
+    <script>
+        window.onload = () => {
+            // جلب المستخدمين من الذاكرة
+            const users = JSON.parse(localStorage.getItem('firo_users')) || {};
+            const userList = Object.keys(users);
+            
+            // تحديث الإحصائيات
+            document.getElementById('user-count').innerText = userList.length;
+
+            // ملء جدول المستخدمين
+            const tbody = document.querySelector('#users-table tbody');
+            userList.forEach(email => {
+                const row = `<tr>
+                    <td>${email}</td>
+                    <td><span style="color: green;">نشط</span></td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        };
+    </script>
+</body>
+</html>
