@@ -56,6 +56,25 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
+        /* زر العودة للسلة المباشر */
+        .cart-nav-link {
+            position: fixed;
+            top: 20px;
+            left: 80px;
+            background: var(--card-bg);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
         .container {
             max-width: 1100px;
             margin: 30px auto;
@@ -100,7 +119,6 @@
         .description ul li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
         .description ul li i { color: var(--primary); font-size: 14px; }
 
-        /* تنسيق قسم أزرار الشراء */
         .purchase-buttons {
             display: flex;
             flex-direction: column;
@@ -126,7 +144,6 @@
 
         .btn-whatsapp:hover { transform: translateY(-3px); background-color: #1ebe57; }
 
-        /* زر إضافة إلى السلة */
         .btn-add-cart {
             display: flex;
             align-items: center;
@@ -167,6 +184,10 @@
     <button class="theme-toggle" onclick="toggleTheme()">
         <i id="theme-icon" class="fas fa-moon"></i>
     </button>
+
+    <a href="cart.html" class="cart-nav-link" title="عرض السلة">
+        <i class="fas fa-shopping-basket"></i>
+    </a>
 
     <div class="container">
         <div class="product-image">
@@ -235,6 +256,11 @@
         }
 
         window.onload = () => {
+            // تحديث العداد عند التحميل
+            if (typeof updateCartCount === "function") {
+                updateCartCount();
+            }
+
             if (localStorage.getItem('theme') === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
                 document.getElementById('theme-icon').className = 'fas fa-sun';
