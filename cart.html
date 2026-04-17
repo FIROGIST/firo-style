@@ -16,6 +16,30 @@
         .total { font-size: 22px; font-weight: bold; text-align: left; margin-top: 20px; color: #a67c52; }
         .empty-msg { text-align: center; padding: 50px; color: #888; }
         .btn-back { display: block; text-align: center; margin-top: 20px; color: #a67c52; text-decoration: none; }
+
+        /* تنسيق زر الواتساب الجديد */
+        .btn-whatsapp-order {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #25d366;
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: 0.3s;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+        }
+        .btn-whatsapp-order:hover {
+            background-color: #1ebe57;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -24,7 +48,13 @@
     <h1><i class="fas fa-shopping-basket"></i> مشترياتك</h1>
     <div id="cart-items-list"></div>
     <div id="cart-summary" class="total"></div>
-    <a href="index.html" class="btn-back">العودة للمعرض</a>
+    
+    <button id="whatsapp-btn" class="btn-whatsapp-order" onclick="sendToWhatsApp()">
+        <i class="fab fa-whatsapp"></i>
+        إتمام الطلب عبر واتساب
+    </button>
+
+    <a href="home.html" class="btn-back">العودة للمعرض</a>
 </div>
 
 <script>
@@ -32,13 +62,16 @@
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const container = document.getElementById('cart-items-list');
         const summary = document.getElementById('cart-summary');
+        const whatsappBtn = document.getElementById('whatsapp-btn');
         
         if (cart.length === 0) {
             container.innerHTML = '<div class="empty-msg">سلتك فارغة حالياً.. اذهب وتسوق الآن!</div>';
             summary.innerHTML = '';
+            whatsappBtn.style.display = 'none'; // إخفاء الزرار لو السلة فاضية
             return;
         }
 
+        whatsappBtn.style.display = 'flex'; // إظهار الزرار لو فيه منتجات
         let html = '';
         let total = 0;
         
@@ -65,6 +98,32 @@
         cart.splice(index, 1);
         localStorage.setItem('cart', JSON.stringify(cart));
         displayCart();
+        
+        // تحديث العداد في الصفحة لو عندك عداد في الـ header
+        if (typeof updateCartCount === 'function') updateCartCount();
+    }
+
+    // الدالة المسؤولة عن تجميع الطلبات وإرسالها للواتساب
+    function sendToWhatsApp() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        if (cart.length === 0) return;
+
+        let phoneNumber = "201557671143"; // رقمك
+        let message = "طلب جديد من FIRO Style ✨%0A%0A";
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            message += `${index + 1}- *${item.name}* (${item.price} جنيه)%0A`;
+            total += parseInt(item.price);
+        });
+
+        message += "%0A--------------------------%0A";
+        message += `💰 *الإجمالي: ${total} جنيه*`;
+        message += "%0A--------------------------%0A";
+        message += "هل هذه الطلبات متوفرة؟";
+
+        // فتح رابط الواتساب بالرسالة المنسقة
+        window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
     }
 
     window.onload = displayCart;
