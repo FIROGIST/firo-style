@@ -56,6 +56,25 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
+        /* زر أيقونة السلة السريع */
+        .cart-nav-link {
+            position: fixed;
+            top: 20px;
+            left: 80px;
+            background: var(--card-bg);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
         .container {
             max-width: 1100px;
             margin: 30px auto;
@@ -166,6 +185,10 @@
         <i id="theme-icon" class="fas fa-moon"></i>
     </button>
 
+    <a href="cart.html" class="cart-nav-link" title="فتح السلة">
+        <i class="fas fa-shopping-basket"></i>
+    </a>
+
     <div class="container">
         <div class="product-image">
             <img src="thumb4.jpg" alt="مكرمية رف دروين">
@@ -196,7 +219,7 @@
                     اطلب عبر واتساب
                 </a>
 
-                <button class="btn-add-cart" onclick="addToCart('مكرمية رف دورين', 500, 'thumb2.jpg')">
+                <button class="btn-add-cart" onclick="addToCart('مكرمية رف دورين', 500, 'thumb4.jpg')">
                     <i class="fas fa-cart-plus"></i>
                     إضافة إلى السلة
                 </button>
@@ -233,6 +256,11 @@
         }
 
         window.onload = () => {
+            // تحديث عداد السلة عند التحميل (إذا كانت الدالة موجودة في cart.js)
+            if (typeof updateCartCount === "function") {
+                updateCartCount();
+            }
+
             if (localStorage.getItem('theme') === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
                 document.getElementById('theme-icon').className = 'fas fa-sun';
